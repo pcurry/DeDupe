@@ -6,6 +6,6 @@ def add_or_append(key, value, dol_target):
     """
     try:
         dol_target[key].append(value)
-    except KeyError ke:
+    except KeyError as ke:
         dol_target[key] = [value]
 
