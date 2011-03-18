@@ -21,14 +21,22 @@ def processTree(path, extensions, files_by_size):
     for root, subdirs, localfiles in os.walk(path):
         # We categorize each file, which os.walk gives us in a list.
         for filename in localfiles:
+            # The filenames in localfires are the names in the directory.
+            # Since os.walk doesn't change dir from the root path, we need the 
+            # fully-qualified name for this to work.
             fqn = os.path.join(root, filename)
-            filesize = os.stat(fqn).st_size
-            add_or_append(filesize, fqn, files_by_size)
-            extension = filename.split('.')[-1]
-            add_or_append(extension, filesize, extensions)
+            # os.walk doesn't categorize links to non-files as subdirs.
+            # So test the fqn to make sure it's actually a file, so the stat call doesn't error.
+            if os.path.isfile(fqn):
+                filesize = os.stat(fqn).st_size
+                add_or_append(filesize, fqn, files_by_size)
+                extension = filename.split('.')[-1]
+                add_or_append(extension, filesize, extensions)
         visited_directories[root] = { 'subdir_count': len(subdirs), 
                                       'file_count': len(localfiles) }
-
+    # Debugging / status statement.
+    # print visited_directories   
+    
 
 
 if __name__ is "__main__":
