@@ -19,6 +19,9 @@ def processTree(path, extensions, files_by_size):
 
     visited_directories = {}
     for root, subdirs, localfiles in os.walk(path):
+        # Don't bother re-processing if we've visited this subtree already.
+        if os.path.realpath(root) in visited_directories:
+            continue
         # We categorize each file, which os.walk gives us in a list.
         for filename in localfiles:
             # The filenames in localfires are the names in the directory.
@@ -32,7 +35,10 @@ def processTree(path, extensions, files_by_size):
                 add_or_append(filesize, fqn, files_by_size)
                 extension = filename.split('.')[-1]
                 add_or_append(extension, filesize, extensions)
-        visited_directories[root] = { 'subdir_count': len(subdirs), 
+            # Here we attempt to chase symlinks
+            elif os.path.islink(fqn) and os.path.isdir(fqn) and os.path.realpath(fqn) not in visited_directories:
+                subdirs.append(filename)
+        visited_directories[os.path.realpath(root)] = { 'subdir_count': len(subdirs), 
                                       'file_count': len(localfiles) }
     # Debugging / status statement.
     # print visited_directories   
