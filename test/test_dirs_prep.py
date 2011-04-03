@@ -4,7 +4,7 @@ import os.path
 def generateTestStructureNoLinks(basepath):
     """ Generate the directory structure to be used to test the detector.
 
-    @return: A list of the directories created.
+    @return: A list of lists, each list being a layer of the directories created.
     """
     # Generate the paths, then create the directories.
     dirname_format = "test-layer%d-dir%d"
@@ -17,12 +17,11 @@ def generateTestStructureNoLinks(basepath):
                             for j in range(per_layer) ]
         layers.append(this_layer)
     layers = layers[1:]
-    return_value = []
+    # FIXME: Think about doing this using os.makepaths() and just the leaves.
     for layer in layers:
         for path in layer:
             os.mkdir(path)
-        return_value += layer
-    return return_value
+    return layers
     
 def cleanTestStructureNoLinks(path_list):
     """ Clean out the generated path structure.
