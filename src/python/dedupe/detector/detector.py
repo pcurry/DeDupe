@@ -41,8 +41,16 @@ def processTree(path, extensions, files_by_size):
         visited_directories[os.path.realpath(root)] = { 'subdir_count': len(subdirs), 
                                       'file_count': len(localfiles) }
     # Debugging / status statement.
-    # print visited_directories   
-    
+    # Return a status.  The extension and file_size dictionaries were modified by the code.
+    return visited_directories
+
+# Next steps:
+# 1) Determine which extensions we care about, if any.
+# 2) Hash the files of the extensions we care about, if there is more than one of the same size.
+# 3) Compare the hashes of files we care about, and complain if the two files match.
+#    MD5 might actually be too weak to be useful, the collision rate is frequent enough that it may be
+#    noticeable in the libraries of files under discussion.  It's around 2^21 according to Wikipedia
+
 
 
 if __name__ is "__main__":
