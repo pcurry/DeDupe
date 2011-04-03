@@ -26,12 +26,14 @@ def generateTestStructureNoLinks(basepath):
 def cleanTestStructureNoLinks(path_list):
     """ Clean out the generated path structure.
     """
+    # shutil.rmtree() might be useful for this.
     pass
     
-def generateTestStructureWithSymLinks(path):
+def generateTestStructureWithSymLinks(basepath):
     """ Generate the directory structure to be used to test the detector.
     """
-    pass
+    # Generate a no-link structure, then put in some links
+    pass 
     
 def generateTestFiles(path):
     """ Generate some sample files to test the detector.
