@@ -19,8 +19,9 @@ def processTree(path, extensions, files_by_size):
 
     visited_directories = {}
     for root, subdirs, localfiles in os.walk(path):
+        realroot = os.path.realpath(root)
         # Don't bother re-processing if we've visited this subtree already.
-        if os.path.realpath(root) in visited_directories:
+        if realroot in visited_directories:
             continue
         # We categorize each file, which os.walk gives us in a list.
         for filename in localfiles:
@@ -38,8 +39,8 @@ def processTree(path, extensions, files_by_size):
             # Here we attempt to chase symlinks
             elif is_unvisited_symlink_dir(fqn, visited_directories):
                 subdirs.append(filename)
-        visited_directories[os.path.realpath(root)] = { 'subdir_count': len(subdirs), 
-                                      'file_count': len(localfiles) }
+        visited_directories[realroot] = { 'subdir_count': len(subdirs), 
+                                          'file_count': len(localfiles) }
     # Debugging / status statement.
     # Return a status.  The extension and file_size dictionaries were modified by the code.
     return visited_directories
