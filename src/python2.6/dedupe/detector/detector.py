@@ -4,7 +4,7 @@ import os
 import os.path
 
 # Project local imports
-from dedupe.util.helper_functions import add_or_append
+from dedupe.util.helper_functions import add_or_append, is_unvisited_symlink_dir
 
 def processTree(path, extensions, files_by_size):
     """ Given a path, a dictionary of extensions, and a dictionary
@@ -36,7 +36,7 @@ def processTree(path, extensions, files_by_size):
                 extension = filename.split('.')[-1]
                 add_or_append(extension, filesize, extensions)
             # Here we attempt to chase symlinks
-            elif os.path.islink(fqn) and os.path.isdir(fqn) and os.path.realpath(fqn) not in visited_directories:
+            elif is_unvisited_symlink_dir(fqn, visited_directories):
                 subdirs.append(filename)
         visited_directories[os.path.realpath(root)] = { 'subdir_count': len(subdirs), 
                                       'file_count': len(localfiles) }
