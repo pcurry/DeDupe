@@ -3,11 +3,16 @@ DeDupe, a simple project to build a system to help remove duplicate files.
 Copyright 2011 Paul Curry, pcurry@gmail.com
 
 The goal of this project is to have a little bit of software that helps the user
-consolidate potentially many duplicate files into one copy in one location. I have
-as many as dozens of copies of some of my digital photographs lying around, 
-which wastes drive space, and gets confusing.  So, trying to figure out a way to 
-get that sorted more cleanly.
+consolidate potentially many duplicate files into one copy in one location. 
+I have as many as dozens of copies of some of my digital photographs lying
+around, which wastes drive space, and gets confusing.  So, trying to figure
+out a way to get that sorted more cleanly.
 
-This code currently depends on the os.walk feature introduced in Python 2.6, so it is not 
-backward-compatible with any Python before 2.6.  I haven't tested the code on Python 2.7 yet,
-so I don't know that it will work or not.
+This code currently depends on the os.walk feature introduced in Python 2.6, 
+so it is not backward-compatible with any Python before 2.6.  I haven't tested
+the code on Python 2.7 yet, so I don't know that it will work or not.
+
+To make sure that the Python 2.6 code is in your PYTHONPATH, cd to the project
+root directory and run setup_pythonpath.sh.  It will put the path to
+the test and directories on the begining of your PYTHONPATH.  It
+assumes you're working in bash or compatible.
