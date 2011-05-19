@@ -23,9 +23,11 @@ class TestAddOrAppend(unittest.TestCase):
         test_value_1 = 'one'
         test_value_2 = 'two'
         test_dict = {test_key : [test_value_1]}
+        self.assert_(test_key in test_dict)
         self.assertEquals(1, len(test_dict[test_key]))
         helper_functions.add_or_append(test_key, test_value_2, test_dict)
         self.assertEquals(2, len(test_dict[test_key]))
+        # Values should always be appended to the list 
         self.assertEquals([test_value_1, test_value_2], test_dict[test_key])
     
 
