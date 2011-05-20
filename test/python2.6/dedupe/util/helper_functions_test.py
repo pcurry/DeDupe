@@ -101,6 +101,44 @@ class TestIsSymlinkDir(unittest.TestCase):
         self.assert_(res, "Linked dir not correctly identified.")
 
 
+class TestIsUnvisitedSymlinkDir(unittest.TestCase):
+    
+    def setUp(self):
+        """ Set up the possible cases to test """
+        # FIXME: Do this setup once, not once per test.
+        self.base_dir_path = tempfile.mkdtemp(suffix='_unit_test')
+        self.actual_dir_path = tempfile.mkdtemp(suffix='_unit_test',
+                                             dir=self.base_dir_path)
+        self.linkdir_path = os.path.join(self.base_dir_path, 'IMA_link_dir')
+        os.symlink(self.actual_dir_path, self.linkdir_path)
+
+    def tearDown(self):
+        """ Clean up the test paths. """
+        os.remove(self.linkdir_path)
+        os.rmdir(self.actual_dir_path)
+        os.rmdir(self.base_dir_path)
+        
+    def test_target_dir_was_visited(self):
+        visited = { self.actual_dir_path : True }
+        realpath = os.path.realpath(self.actual_dir_path)
+        if self.actual_dir_path != realpath:
+            visited[realpath] = True
+        self.assert_(self.actual_dir_path in visited, 
+                     "Dictionary key testing false?!?")
+        res = helper_functions.is_unvisited_symlink_dir(self.linkdir_path,
+                                                        visited)
+        self.failIf(res, "Returned true even though target was in visited.")
+
+    def test_link_dir_was_visited(self):
+        visited = { self.linkdir_path : True }
+        self.assert_(self.linkdir_path in visited, 
+                     "Dictionary key testing false?!?")
+        res = helper_functions.is_unvisited_symlink_dir(self.linkdir_path,
+                                                        visited)
+        self.failIf(res, 
+                    "Returned true even though linkdir_path was in visited.")
+
+
 if __name__ == "__main__":
     unittest.main()
     
