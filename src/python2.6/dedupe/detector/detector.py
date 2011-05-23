@@ -6,7 +6,7 @@ import os.path
 # Project local imports
 from dedupe.util.helper_functions import add_or_append, is_unvisited_symlink_dir
 
-def processTree(path, extensions, files_by_size):
+def process_tree(path, extensions, files_by_size):
     """ Given a path, a dictionary of extensions, and a dictionary
     of files identified by size, walks the path, categorizing files.
 
@@ -48,13 +48,14 @@ def processTree(path, extensions, files_by_size):
     return visited_directories
 
 
-
 def processFilename(fqn, files_by_size, extensions):
     filesize = os.stat(fqn).st_size
     add_or_append(filesize, fqn, files_by_size)
     extension = fqn.split('.')[-1]
     add_or_append(extension, filesize, extensions)
     
+
+
 
 # Next steps:
 # 1) Determine which extensions we care about, if any.
