@@ -49,8 +49,12 @@ def processTree(path, extensions, files_by_size):
 
 
 
-def processFilename(fqn, sizes, extensions):
-    pass
+def processFilename(fqn, files_by_size, extensions):
+    filesize = os.stat(fqn).st_size
+    add_or_append(filesize, fqn, files_by_size)
+    extension = fqn.split('.')[-1]
+    add_or_append(extension, filesize, extensions)
+    
 
 # Next steps:
 # 1) Determine which extensions we care about, if any.
