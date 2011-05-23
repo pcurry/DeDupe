@@ -54,7 +54,7 @@ def processTree(path, extensions, files_by_size):
 # 3) Compare the hashes of files we care about, and complain if the two files 
 #    match.  MD5 might actually be too weak to be useful, the collision rate 
 #    is high enough that it may be noticeable in the libraries of files under
-#     discussion.  It's around 2^21 according to Wikipedia.
+#    discussion.  It's around 2^21 according to Wikipedia.
 
 
 
