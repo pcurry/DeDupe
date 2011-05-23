@@ -23,7 +23,6 @@ class TestAddOrAppend(unittest.TestCase):
         self.assert_(test_key in test_dict)
         self.assertEqual([test_value], test_dict[test_key])
     
-        
     def testAppend(self):
         test_key = 1
         test_value_1 = 'one'
@@ -137,6 +136,35 @@ class TestIsUnvisitedSymlinkDir(unittest.TestCase):
                                                         visited)
         self.failIf(res, 
                     "Returned true even though linkdir_path was in visited.")
+
+
+class TestProcessExtension(unittest.TestCase):
+    
+    def test_normal_filenames(self):
+        test_extensions = ['txt', 'avi', 'JPEG', 'py', 'pyc', 'mov', 
+                           'wmv', 'mp3']
+        test_names = ['kitty', 'RENAME', 'personal', 'CamelCaseMe', 
+                          'weird_name_1', 'weird-unixy-name']
+
+        # Cartesian product filename list
+        test_filenames = [ '.'.join([name, ext]) 
+                           for name in test_names
+                           for ext in test_extensions ]
+        found_extensions = [ helper_functions.process_extension(test_filename)
+                             for test_filename in test_filenames ]
+        self.assertEquals(set(found_extensions),
+                          set(test_extensions),
+                          "Missed or misfiled an extension")
+
+    def test_zero_length_extension(self):
+        test_filename = 'just_me.'
+        found_extension = helper_functions.process_extension(test_filename)
+        self.assertEquals('', found_extension)
+
+    def test_no_extension(self):
+        test_filename = 'I_am_myself'
+        found_extension = helper_functions.process_extension(test_filename)
+        self.assert_(found_extension is None)
 
 
 if __name__ == "__main__":

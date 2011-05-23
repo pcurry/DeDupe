@@ -25,3 +25,5 @@ def is_unvisited_symlink_dir(fqn, visited):
     target_not_visited = os.path.realpath(fqn) not in visited
     return is_symlink_dir(fqn) and link_not_visited and target_not_visited 
     
+def process_extension(filename):
+    pass
