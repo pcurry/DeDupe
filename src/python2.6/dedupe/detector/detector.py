@@ -47,6 +47,11 @@ def processTree(path, extensions, files_by_size):
     # modified by the code.
     return visited_directories
 
+
+
+def processFilename(fqn, sizes, extensions):
+    pass
+
 # Next steps:
 # 1) Determine which extensions we care about, if any.
 # 2) Hash the files of the extensions we care about, if there is more than 
