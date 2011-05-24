@@ -166,6 +166,14 @@ class TestProcessExtension(unittest.TestCase):
         found_extension = helper_functions.process_extension(test_filename)
         self.assert_(found_extension is None)
 
+    def test_not_string_input(self):
+        try:
+            helper_functions.process_extension(35)
+            self.failIf(True, 
+                        "Non-string filename - ints can't split")
+        except AttributeError as ae :
+            self.assert_(True)
+
 
 if __name__ == "__main__":
     unittest.main()
