@@ -8,7 +8,7 @@ import dedupe.util.helper_functions as helper_functions
 
 NO_EXTENSION = "No extension"
 
-def process_tree(path, extensions, files_by_size):
+def process_tree(path, files_by_size, extensions):
     """ Given a path, a dictionary of extensions, and a dictionary
     of files identified by size, walks the path, categorizing files.
 
