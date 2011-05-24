@@ -26,4 +26,9 @@ def is_unvisited_symlink_dir(fqn, visited):
     return is_symlink_dir(fqn) and link_not_visited and target_not_visited 
     
 def process_extension(filename):
-    pass
+    filename_components = filename.split('.')
+    if len(filename_components) == 1:
+        return None
+    else:
+        return filename_components[-1]
+

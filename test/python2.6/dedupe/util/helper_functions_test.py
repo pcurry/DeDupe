@@ -154,7 +154,7 @@ class TestProcessExtension(unittest.TestCase):
                              for test_filename in test_filenames ]
         self.assertEquals(set(found_extensions),
                           set(test_extensions),
-                          "Missed or misfiled an extension")
+                          "Missed or misfiled one or more extensions")
 
     def test_zero_length_extension(self):
         test_filename = 'just_me.'
