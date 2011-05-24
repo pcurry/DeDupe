@@ -10,8 +10,7 @@ import tempfile
 # Module under test
 import dedupe.detector.detector as detector
 
-class TestProcessFile(unittest.TestCase):
-    
+class TestProcessFilename(unittest.TestCase):
     
     def setUp(self):
         self.files_by_size = {}
@@ -25,7 +24,6 @@ class TestProcessFile(unittest.TestCase):
         os.rmdir(self.tempdir)
 
     def testTextFile(self):
-
         test_extension = 'txt'
         test_filename = 'ima_unittest.' + test_extension
         test_fqn = os.path.join(self.tempdir, test_filename)
@@ -36,16 +34,13 @@ class TestProcessFile(unittest.TestCase):
                     "self.files_by_size incorrectly initialized.")
         self.failIf(test_extension in self.extensions,
                     "self.extensions incorrectly initialized.")
-        detector.processFilename(test_fqn, self.files_by_size, self.extensions)
+        detector.process_filename(test_fqn, self.files_by_size, self.extensions)
         self.assert_(len(self.standard_test_string) in self.files_by_size,
                      "Didn't insert length into self.files_by_size correctly.")
         self.assert_(test_extension in self.extensions,
                      "Didn't insert extension into self.extensions correctly.")
         os.remove(test_fqn)
    
-    #def testFileWithoutExtension(self):
-        
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -4,7 +4,9 @@ import os
 import os.path
 
 # Project local imports
-from dedupe.util.helper_functions import add_or_append, is_unvisited_symlink_dir
+import dedupe.util.helper_functions as helper_functions
+
+NO_EXTENSION = "No extension"
 
 def process_tree(path, extensions, files_by_size):
     """ Given a path, a dictionary of extensions, and a dictionary
@@ -33,12 +35,10 @@ def process_tree(path, extensions, files_by_size):
             # Test the fqn to make sure it's actually a file, so the stat call 
             # doesn't fail.
             if os.path.isfile(fqn):
-                filesize = os.stat(fqn).st_size
-                add_or_append(filesize, fqn, files_by_size)
-                extension = filename.split('.')[-1]
-                add_or_append(extension, filesize, extensions)
+                process_filename(fqn, files_by_size, extensions)
             # Here we attempt to chase symlinks
-            elif is_unvisited_symlink_dir(fqn, visited_directories):
+            elif helper_functions.is_unvisited_symlink_dir(fqn, 
+                                                           visited_directories):
                 subdirs.append(filename)
         visited_directories[realroot] = { 'subdir_count': len(subdirs), 
                                           'file_count': len(localfiles) }
@@ -48,14 +48,18 @@ def process_tree(path, extensions, files_by_size):
     return visited_directories
 
 
-def processFilename(fqn, files_by_size, extensions):
+def process_filename(fqn, files_by_size, extensions):
+    """ Given a fully-qualified filename, a dictionary of filenames keyed by
+    size, and a dictionary of file extensions, update the two dictionaries
+    with the relevant information about the file.
+    """
     filesize = os.stat(fqn).st_size
-    add_or_append(filesize, fqn, files_by_size)
-    extension = fqn.split('.')[-1]
-    add_or_append(extension, filesize, extensions)
+    helper_functions.add_or_append(filesize, fqn, files_by_size)
+    extension = helper_functions.process_extension(fqn)
+    if extension is None:
+        extension = NO_EXTENSION
+    helper_functions.add_or_append(extension, filesize, extensions)
     
-
-
 
 # Next steps:
 # 1) Determine which extensions we care about, if any.
@@ -67,8 +71,6 @@ def processFilename(fqn, files_by_size, extensions):
 #    discussion.  It's around 2^21 according to Wikipedia.
 
 
-
 if __name__ is "__main__":
-    print "I am the detector script."
-
+    print "I am the detector module."
 
