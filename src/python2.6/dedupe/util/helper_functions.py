@@ -29,6 +29,8 @@ def process_extension(filename):
     filename_components = filename.split('.')
     if len(filename_components) == 1:
         return None
-    else:
-        return filename_components[-1]
+    possible_extension = filename_components[-1]
+    if possible_extension.find(os.sep) != -1:
+        return None
+    return possible_extension
 

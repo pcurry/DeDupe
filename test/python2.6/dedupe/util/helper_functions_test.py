@@ -174,6 +174,14 @@ class TestProcessExtension(unittest.TestCase):
         except AttributeError as ae :
             self.assert_(True)
 
+    def test_file_in_period_named_director(self):
+        """ A directory name that includes a period can lead to screwy results.
+        Make sure that doesn't happen again.
+        """
+        test_filename = os.sep.join(['.first','second'])
+        found_extension = helper_functions.process_extension(test_filename)
+        self.assert_(found_extension is None)
+        
 
 if __name__ == "__main__":
     unittest.main()
