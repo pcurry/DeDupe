@@ -16,4 +16,9 @@ This code currently depends on the os.walk feature introduced in Python 2.6,
 so it is not backward-compatible with any Python before 2.6.  I haven't tested
 the code on Python 2.7 yet, so I don't know that it will work or not.
 
+To make sure that the Python 2.6 code is in your PYTHONPATH, cd to the project
+root directory and run setup_pythonpath.sh.  It will put the path to
+the test and directories on the begining of your PYTHONPATH.  It
+assumes you're working in bash or compatible.
+
 I haven't picked a license yet.
