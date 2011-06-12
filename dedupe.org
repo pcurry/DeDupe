@@ -1,0 +1,10 @@
+* Design 
+* Implementation
+* Features
+** To Add
+* Bugs
+** TODO Handle symlinked normal files better.
+* Testing
+** TODO Pick a Python code coverage tool to try.
+** TODO Try the first Python code coverage tool.
+** TODO Reach 100% coverage.
