@@ -8,6 +8,20 @@ import dedupe.util.helper_functions as helper_functions
 
 NO_EXTENSION = "No extension"
 
+def _always_true(whatever):
+    return True
+
+def detect_file_extensions(path, file_filter=_always_true, 
+                           path_filter=_always_true):
+    """ Given a root path, returns a dictionary keyed by extension, 
+    which holds a count of the number of files of that extension.  The 
+    optional file_filter and path_filter should be functions that accept, 
+    respectively, a filename or a path, and returns true if it should be 
+    accepted.
+    """
+    pass
+
+
 def process_tree(path, files_by_size, extensions):
     """ Given a path, a dictionary of extensions, and a dictionary
     of files identified by size, walks the path, categorizing files.
