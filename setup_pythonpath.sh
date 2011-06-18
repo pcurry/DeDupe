@@ -1,4 +1,4 @@
 #!/bin/bash
 
-PYTHONPATH=$PWD/test/python2.6:$PWD/src/python2.6:$PYTHONPATH
+PYTHONPATH=$PWD/test/python2.7:$PWD/src/python2.7:$PYTHONPATH
 export PYTHONPATH
