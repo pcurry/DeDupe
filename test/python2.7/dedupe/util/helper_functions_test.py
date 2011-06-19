@@ -14,7 +14,7 @@ class TestAddOrAppend(unittest.TestCase):
     """ Test that add_or_append works sanely.
     """
 
-    def testAdd(self):
+    def test_add(self):
         test_key = 1
         test_value = "one"
         test_dict = {}
@@ -23,7 +23,7 @@ class TestAddOrAppend(unittest.TestCase):
         self.assert_(test_key in test_dict)
         self.assertEqual([test_value], test_dict[test_key])
     
-    def testAppend(self):
+    def test_append(self):
         test_key = 1
         test_value_1 = 'one'
         test_value_2 = 'two'
@@ -36,7 +36,7 @@ class TestAddOrAppend(unittest.TestCase):
         self.assertEquals([test_value_1, test_value_2], test_dict[test_key])
         self.assertNotEqual([test_value_2, test_value_1], test_dict[test_key])
 
-    def testComplicatedUse(self):
+    def test_complicated_use(self):
         test_key_1 = 1
         test_key_2 = "two"
         test_key_3 = 3
@@ -72,15 +72,15 @@ class TestIsSymlinkDir(unittest.TestCase):
         os.remove(self.actual_file_path)
         os.rmdir(self.base_dir_path)
 
-    def testNotLinkDir(self):
+    def test_not_link_dir(self):
         self.failIf(helper_functions.is_symlink_dir(self.base_dir_path),
                     "Returned true on a dir that wasn't a link.")
     
-    def testNotLinkNotDir(self):
+    def test_not_link_not_dir(self):
         res = helper_functions.is_symlink_dir(self.actual_file_path)
         self.failIf(res, "Returned true on a regular file.")
         
-    def testLinkNotDir(self):
+    def test_link_not_dir(self):
         linkname = 'IMA_file_link_unit_test'
         linkpath = os.path.join(self.base_dir_path, linkname)
         os.symlink(self.actual_file_path, linkpath)
@@ -88,7 +88,7 @@ class TestIsSymlinkDir(unittest.TestCase):
         os.remove(linkpath)
         self.failIf(res, "Returned true on a symlink to a file.")
 
-    def testLinkDir(self):
+    def test_link_dir(self):
         linkname = 'IMA_dir_link_unit_test'
         linkpath = os.path.join(self.base_dir_path, linkname)
         realdir = tempfile.mkdtemp(suffix='_unit_test', 
@@ -174,7 +174,7 @@ class TestProcessExtension(unittest.TestCase):
         except AttributeError as ae :
             self.assert_(True)
 
-    def test_file_in_period_named_director(self):
+    def test_file_in_period_named_directory(self):
         """ A directory name that includes a period can lead to screwy results.
         Make sure that doesn't happen again.
         """
