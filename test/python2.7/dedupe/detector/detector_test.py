@@ -47,6 +47,30 @@ class TestProcessFilename(unittest.TestCase):
                      "Didn't insert extension into self.extensions correctly.")
         os.remove(test_fqn)
    
+    def test_no_extension(self):
+        # Check pre-test state
+        self.failIf(len(self.standard_test_string) in self.files_by_size,
+                    "self.files_by_size incorrectly initialized.")
+        self.failIf(detector.NO_EXTENSION in self.extensions,
+                    "self.extensions incorrectly initialized.")
+        # Setup test filenames
+        test_filename = 'ima_unittest'
+        test_fqns = [os.path.join(self.tempdir, test_filename)]
+        test_fqns.append(test_fqns[0] + '.')
+        test_fqns.append(os.path.join(self.tempdir, '.' + test_filename))
+        for test_fqn in test_fqns:
+            self._make_standard_file_at(test_fqn)
+            detector.process_filename(test_fqn, self.files_by_size, 
+                                      self.extensions)
+            os.remove(test_fqn)
+        self.assert_(len(self.standard_test_string) in self.files_by_size,
+                     "Didn't insert length into self.files_by_size correctly.")
+        self.assertEquals(len(test_fqns),
+                     len(self.files_by_size[len(self.standard_test_string)]),
+                     "Missed one or more files.")
+        self.assert_(detector.NO_EXTENSION in self.extensions,
+                     "Didn't insert extension into self.extensions correctly.")
+        
 
 if __name__ == "__main__":
     unittest.main()
