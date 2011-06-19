@@ -8,7 +8,8 @@ import dedupe.util.helper_functions as helper_functions
 
 NO_EXTENSION = "No extension"
 
-def process_tree(path, files_by_size, extensions):
+def process_tree(path, files_by_size, extensions, 
+                 excluhe_file_filter=(lambda x: False)):
     """ Given a path, a dictionary of extensions, and a dictionary
     of files identified by size, walks the path, categorizing files.
 
@@ -34,7 +35,7 @@ def process_tree(path, files_by_size, extensions):
             # os.walk doesn't categorize links to non-files as subdirs.
             # Test the fqn to make sure it's actually a file, so the stat call 
             # doesn't fail.
-            if os.path.isfile(fqn):
+            if os.path.isfile(fqn) and not exclude_file_filter(fqn):
                 process_filename(fqn, files_by_size, extensions)
             # Here we attempt to chase symlinks
             elif helper_functions.is_unvisited_symlink_dir(fqn, 
