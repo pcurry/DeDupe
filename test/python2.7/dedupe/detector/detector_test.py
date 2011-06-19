@@ -12,6 +12,12 @@ import dedupe.detector.detector as detector
 
 class TestProcessFilename(unittest.TestCase):
     
+    def _make_standard_file_at(self, filename):
+        fout = open(filename, 'w+b')
+        fout.write(self.standard_test_string)
+        fout.close()
+        
+
     def setUp(self):
         self.files_by_size = {}
         self.extensions = {}
@@ -27,9 +33,8 @@ class TestProcessFilename(unittest.TestCase):
         test_extension = 'txt'
         test_filename = 'ima_unittest.' + test_extension
         test_fqn = os.path.join(self.tempdir, test_filename)
-        fout = open(test_fqn, 'w+b')
-        fout.write(self.standard_test_string)
-        fout.close()
+        self._make_standard_file_at(test_fqn)
+        # Check pre-test state
         self.failIf(len(self.standard_test_string) in self.files_by_size,
                     "self.files_by_size incorrectly initialized.")
         self.failIf(test_extension in self.extensions,
